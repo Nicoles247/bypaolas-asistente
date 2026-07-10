@@ -7,89 +7,51 @@
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { background: #FBF6F0; font-family: Arial, sans-serif; min-height: 100vh; padding-bottom: 60px; }
-
-  .header {
-    background: #2B1A0E; padding: 28px 24px 22px; text-align: center;
-  }
-  .logo {
-    width: 52px; height: 52px; border-radius: 50%;
-    background: rgba(212,175,55,0.15); border: 2px solid rgba(212,175,55,0.5);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 24px; margin: 0 auto 12px;
-  }
+  .header { background: #2B1A0E; padding: 28px 24px 22px; text-align: center; }
+  .logo { width: 52px; height: 52px; border-radius: 50%; background: rgba(212,175,55,0.15); border: 2px solid rgba(212,175,55,0.5); display: flex; align-items: center; justify-content: center; font-size: 24px; margin: 0 auto 12px; }
   .badge { color: #C9A96E; font-size: 10px; letter-spacing: 3px; margin-bottom: 4px; text-transform: uppercase; }
   .title { color: #F5EDE3; font-size: 20px; font-weight: 700; margin-bottom: 4px; font-family: Georgia, serif; }
   .subtitle { color: #A08060; font-size: 12px; }
-
   .container { max-width: 520px; margin: 0 auto; padding: 24px 20px; }
 
-  .api-box {
-    background: #fff; border: 1px solid #E8D4BC; border-radius: 12px;
-    padding: 16px 18px; margin-bottom: 20px;
-  }
-  .api-box-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
-  .api-box-title { font-size: 12px; font-weight: 700; color: #5C3D1E; }
-  .api-box p { font-size: 12px; color: #8A7060; margin-bottom: 10px; line-height: 1.5; }
-  .api-configured {
-    background: none; border: 1px solid #E8D4BC; color: #8A6A4A;
-    border-radius: 20px; padding: 5px 14px; font-size: 12px;
-    cursor: pointer; margin-bottom: 18px; display: inline-block;
-  }
+  /* API KEY SETUP */
+  .setup-screen { background: #fff; border: 1.5px solid #E8D4BC; border-radius: 16px; padding: 28px 24px; margin-bottom: 20px; text-align: center; }
+  .setup-icon { font-size: 36px; margin-bottom: 12px; }
+  .setup-title { font-size: 17px; font-weight: 700; color: #2B1A0E; margin-bottom: 8px; }
+  .setup-desc { font-size: 13px; color: #8A7060; line-height: 1.6; margin-bottom: 20px; }
+  .setup-desc a { color: #C9A96E; }
+  .setup-input { width: 100%; padding: 13px 16px; border: 1.5px solid #E8D4BC; border-radius: 12px; font-size: 15px; font-family: Arial; color: #2B1A0E; outline: none; margin-bottom: 12px; transition: border-color 0.2s; }
+  .setup-input:focus { border-color: #C9A96E; }
+  .setup-btn { width: 100%; padding: 14px; background: #2B1A0E; color: #F5EDE3; border: none; border-radius: 12px; font-size: 15px; font-weight: 700; cursor: pointer; font-family: Arial; }
+  .setup-note { font-size: 11px; color: #B8A090; margin-top: 10px; }
 
-  .field-label {
-    display: block; font-size: 11px; font-weight: 700;
-    color: #8A6A4A; letter-spacing: 1.5px; margin-bottom: 8px; text-transform: uppercase;
-  }
-  input[type="password"], textarea {
-    width: 100%; padding: 13px 16px; border: 1.5px solid #E8D4BC;
-    border-radius: 12px; font-size: 15px; font-family: Arial, sans-serif;
-    background: #fff; color: #2B1A0E; outline: none;
-    transition: border-color 0.2s;
-  }
-  input[type="password"]:focus, textarea:focus { border-color: #C9A96E; }
-  textarea { resize: vertical; line-height: 1.6; }
+  /* MAIN TOOL */
+  .tool-screen { display: none; }
+  .api-status { display: flex; justify-content: space-between; align-items: center; background: #F0F8F0; border: 1px solid #C8E6C9; border-radius: 8px; padding: 8px 14px; margin-bottom: 18px; }
+  .api-status-text { font-size: 12px; color: #2E7D32; font-weight: 700; }
+  .api-change { font-size: 11px; color: #8A7060; text-decoration: underline; cursor: pointer; background: none; border: none; font-family: Arial; }
+
+  .field-label { display: block; font-size: 11px; font-weight: 700; color: #8A6A4A; letter-spacing: 1.5px; margin-bottom: 8px; text-transform: uppercase; }
+  textarea { width: 100%; padding: 14px 16px; border: 1.5px solid #E8D4BC; border-radius: 12px; font-size: 15px; font-family: Arial; background: #fff; color: #2B1A0E; resize: vertical; outline: none; line-height: 1.6; transition: border-color 0.2s; }
+  textarea:focus { border-color: #C9A96E; }
 
   .btn-row { display: flex; gap: 10px; margin: 14px 0 24px; }
-  .btn-primary {
-    flex: 1; padding: 14px 20px; background: #2B1A0E; color: #F5EDE3;
-    border: none; border-radius: 12px; font-size: 15px; font-weight: 700;
-    cursor: pointer; font-family: Arial, sans-serif; transition: background 0.2s;
-  }
+  .btn-primary { flex: 1; padding: 14px 20px; background: #2B1A0E; color: #F5EDE3; border: none; border-radius: 12px; font-size: 15px; font-weight: 700; cursor: pointer; font-family: Arial; }
   .btn-primary:disabled { background: #C4A882; cursor: default; }
-  .btn-secondary {
-    padding: 14px 16px; background: transparent; color: #8A6A4A;
-    border: 1.5px solid #E8D4BC; border-radius: 12px; font-size: 14px;
-    cursor: pointer; font-family: Arial, sans-serif;
-  }
+  .btn-secondary { padding: 14px 16px; background: transparent; color: #8A6A4A; border: 1.5px solid #E8D4BC; border-radius: 12px; font-size: 14px; cursor: pointer; font-family: Arial; display: none; }
 
-  .error-box {
-    background: #FDF0EE; border: 1px solid #E8B4A8;
-    border-radius: 8px; padding: 10px 14px;
-    font-size: 13px; color: #A03020; margin-bottom: 14px;
-  }
+  .error-box { background: #FDF0EE; border: 1px solid #E8B4A8; border-radius: 8px; padding: 10px 14px; font-size: 13px; color: #A03020; margin-bottom: 14px; display: none; }
 
-  .response-box {
-    background: #fff; border: 1.5px solid #E8D4BC; border-radius: 14px;
-    overflow: hidden; box-shadow: 0 2px 12px rgba(43,26,14,0.06); margin-bottom: 24px;
-  }
-  .response-header {
-    background: #F5EDE3; padding: 12px 16px;
-    display: flex; justify-content: space-between; align-items: center;
-    border-bottom: 1px solid #E8D4BC;
-  }
+  .response-box { background: #fff; border: 1.5px solid #E8D4BC; border-radius: 14px; overflow: hidden; box-shadow: 0 2px 12px rgba(43,26,14,0.06); margin-bottom: 24px; display: none; }
+  .response-header { background: #F5EDE3; padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #E8D4BC; }
   .response-label { font-size: 11px; font-weight: 700; color: #8A6A4A; letter-spacing: 1.5px; text-transform: uppercase; }
-  .btn-copy {
-    background: transparent; color: #8A6A4A; border: 1px solid #C9A96E;
-    border-radius: 20px; padding: 4px 14px; font-size: 12px; cursor: pointer;
-    font-family: Arial, sans-serif; transition: all 0.2s;
-  }
+  .btn-copy { background: transparent; color: #8A6A4A; border: 1px solid #C9A96E; border-radius: 20px; padding: 4px 14px; font-size: 12px; cursor: pointer; font-family: Arial; transition: all 0.2s; }
   .btn-copy.copied { background: #2B1A0E; color: #F5EDE3; }
   .response-text { padding: 18px 20px; font-size: 15px; line-height: 1.8; color: #2B1A0E; white-space: pre-wrap; }
   .response-footer { padding: 10px 20px 14px; border-top: 1px solid #F0E4D4; font-size: 12px; color: #B8A090; font-style: italic; }
 
   .empty-state { text-align: center; padding: 28px 20px; color: #C4A882; }
-  .empty-state .icon { font-size: 32px; margin-bottom: 10px; }
-  .empty-state p { font-size: 13px; line-height: 1.6; }
+  .empty-icon { font-size: 32px; margin-bottom: 10px; }
 
   .ref-box { background: #fff; border: 1px solid #E8D4BC; border-radius: 12px; overflow: hidden; }
   .ref-header { background: #2B1A0E; padding: 10px 16px; font-size: 11px; color: #C9A96E; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; }
@@ -97,10 +59,7 @@
   .ref-row:last-child { border-bottom: none; }
   .ref-label { font-size: 13px; font-weight: 700; color: #5C3D1E; min-width: 100px; flex-shrink: 0; }
   .ref-val { font-size: 12px; color: #6B4C32; line-height: 1.5; }
-
   .footer-note { text-align: center; margin-top: 24px; font-size: 11px; color: #C4A882; }
-
-  .hidden { display: none; }
 </style>
 </head>
 <body>
@@ -114,148 +73,195 @@
 
 <div class="container">
 
-  <!-- API KEY -->
-  <div class="api-box" id="apiBox">
-    <div class="api-box-header">
-      <div class="api-box-title">🔑 Gemini API Key</div>
-      <button onclick="hideApiBox()" id="hideBtn" style="background:none;border:none;color:#B8A090;cursor:pointer;font-size:12px;text-decoration:underline;">ocultar</button>
+  <!-- SETUP SCREEN (shown only first time) -->
+  <div class="setup-screen" id="setupScreen">
+    <div class="setup-icon">🔑</div>
+    <div class="setup-title">Configuración inicial</div>
+    <div class="setup-desc">
+      Solo necesitas hacer esto <strong>una vez</strong>.<br>
+      Tu clave se guardará en este dispositivo automáticamente.<br><br>
+      Consíguela gratis en <a href="https://aistudio.google.com" target="_blank">aistudio.google.com</a> → "Get API Key"
     </div>
-    <p>Consíguela gratis en <strong>aistudio.google.com</strong> → "Get API Key". Solo se usa en tu dispositivo, no se guarda en ningún servidor.</p>
-    <input type="password" id="apiKey" placeholder="AIza..." />
+    <input type="password" class="setup-input" id="setupKey" placeholder="Pega tu API Key aquí (AIza...)" />
+    <button class="setup-btn" onclick="saveApiKey()">✓ Guardar y comenzar</button>
+    <div class="setup-note">Tu clave nunca sale de tu dispositivo.</div>
   </div>
 
-  <button class="api-configured hidden" id="apiConfigured" onclick="showApiBox()">🔑 API Key configurada ✓</button>
+  <!-- MAIN TOOL SCREEN -->
+  <div class="tool-screen" id="toolScreen">
 
-  <!-- INPUT -->
-  <div style="margin-bottom:14px;">
-    <label class="field-label">Mensaje de la clienta</label>
-    <textarea id="clientMessage" rows="5" placeholder="Pega aquí el mensaje de tu clienta — en inglés o español..."></textarea>
-  </div>
-
-  <!-- ERROR -->
-  <div class="error-box hidden" id="errorBox"></div>
-
-  <!-- BUTTONS -->
-  <div class="btn-row">
-    <button class="btn-primary" id="generateBtn" onclick="generateResponse()">✨ Generar respuesta</button>
-    <button class="btn-secondary" id="clearBtn" onclick="resetAll()" style="display:none;">Limpiar</button>
-  </div>
-
-  <!-- RESPONSE -->
-  <div class="response-box hidden" id="responseBox">
-    <div class="response-header">
-      <div class="response-label">Respuesta lista ✓</div>
-      <button class="btn-copy" id="copyBtn" onclick="copyResponse()">Copiar</button>
+    <div class="api-status">
+      <span class="api-status-text">🔑 API Key configurada ✓</span>
+      <button class="api-change" onclick="changeApiKey()">Cambiar</button>
     </div>
-    <div class="response-text" id="responseText"></div>
-    <div class="response-footer">Revisa antes de enviar — ajusta si el tono no es tuyo 🌸</div>
-  </div>
 
-  <!-- EMPTY STATE -->
-  <div class="empty-state" id="emptyState">
-    <div class="icon">💬</div>
-    <p>La respuesta aparecerá aquí<br>lista para copiar y enviar</p>
-  </div>
+    <div style="margin-bottom:14px;">
+      <label class="field-label">Mensaje de la clienta</label>
+      <textarea id="clientMessage" rows="5" placeholder="Pega aquí el mensaje de tu clienta — en inglés o español..."></textarea>
+    </div>
 
-  <!-- QUICK REFERENCE -->
-  <div class="ref-box">
-    <div class="ref-header">Referencia rápida de políticas</div>
-    <div class="ref-row"><span class="ref-label">💳 Depósito</span><span class="ref-val">$30 no reembolsable · máximo 1 hora para enviarlo</span></div>
-    <div class="ref-row"><span class="ref-label">💰 Zelle</span><span class="ref-val">bypaolas9@gmail.com (By Paolagsh LLC)</span></div>
-    <div class="ref-row"><span class="ref-label">💚 CashApp</span><span class="ref-val">$Pginette9 (Paola Serrano)</span></div>
-    <div class="ref-row"><span class="ref-label">🕐 Horario</span><span class="ref-val">Mar–Vie 9:30 AM – 6:00 PM · After-hours +$15–$20 · Sin walk-ins</span></div>
-    <div class="ref-row"><span class="ref-label">📅 Booksy</span><span class="ref-val">booksy.com/en-us/1707829_by-paolas_brows-lashes_31270_hilliard</span></div>
-    <div class="ref-row"><span class="ref-label">❌ Cancelación</span><span class="ref-val">Mínimo 24h · No-show = pierde depósito</span></div>
-    <div class="ref-row"><span class="ref-label">✨ Retoques</span><span class="ref-val">1 semana – 21 días · Después = set nuevo</span></div>
-    <div class="ref-row"><span class="ref-label">🛡️ Garantía</span><span class="ref-val">Gratis si &lt; 3 días + cuidado posterior seguido</span></div>
-    <div class="ref-row"><span class="ref-label">⏰ Tardanza</span><span class="ref-val">Más de 15 min = cita cancelada</span></div>
-  </div>
+    <div class="error-box" id="errorBox"></div>
 
-  <div class="footer-note">Powered by Gemini AI · Growth Partner AI × By Paolas</div>
+    <div class="btn-row">
+      <button class="btn-primary" id="generateBtn" onclick="generateResponse()">✨ Generar respuesta</button>
+      <button class="btn-secondary" id="clearBtn" onclick="resetAll()">Limpiar</button>
+    </div>
+
+    <div class="response-box" id="responseBox">
+      <div class="response-header">
+        <div class="response-label">Respuesta lista ✓</div>
+        <button class="btn-copy" id="copyBtn" onclick="copyResponse()">Copiar</button>
+      </div>
+      <div class="response-text" id="responseText"></div>
+      <div class="response-footer">Revisa antes de enviar — ajusta si el tono no es tuyo 🌸</div>
+    </div>
+
+    <div class="empty-state" id="emptyState">
+      <div class="empty-icon">💬</div>
+      <p style="font-size:13px;line-height:1.6;">La respuesta aparecerá aquí<br>lista para copiar y enviar</p>
+    </div>
+
+    <div class="ref-box">
+      <div class="ref-header">Referencia rápida de políticas</div>
+      <div class="ref-row"><span class="ref-label">🕐 Horario</span><span class="ref-val">Mar–Vie 9:30 AM – 6:00 PM · After-hours +$15–$20 · Sin walk-ins</span></div>
+      <div class="ref-row"><span class="ref-label">💳 Depósito</span><span class="ref-val">$30 no reembolsable · máximo 1 hora para enviarlo</span></div>
+      <div class="ref-row"><span class="ref-label">💰 Zelle</span><span class="ref-val">bypaolas9@gmail.com (By Paolagsh LLC)</span></div>
+      <div class="ref-row"><span class="ref-label">💚 CashApp</span><span class="ref-val">$Pginette9 (Paola Serrano)</span></div>
+      <div class="ref-row"><span class="ref-label">📅 Booksy</span><span class="ref-val">booksy.com/en-us/1707829_by-paolas_brows-lashes_31270_hilliard</span></div>
+      <div class="ref-row"><span class="ref-label">❌ Cancelación</span><span class="ref-val">Mínimo 24h · No-show = pierde depósito</span></div>
+      <div class="ref-row"><span class="ref-label">✨ Retoques</span><span class="ref-val">1 semana – 21 días · Después = set nuevo</span></div>
+      <div class="ref-row"><span class="ref-label">🛡️ Garantía</span><span class="ref-val">Gratis si menos de 3 días + cuidado seguido</span></div>
+      <div class="ref-row"><span class="ref-label">⏰ Tardanza</span><span class="ref-val">Más de 15 min = cita cancelada</span></div>
+    </div>
+
+    <div class="footer-note">Powered by Gemini AI · Growth Partner AI × By Paolas</div>
+  </div>
 </div>
 
 <script>
-const PROMPT = `Eres el asistente de comunicación de By Paolas (@by.paolas), negocio de extensiones de pestañas y servicios de cejas operado por Paola Serrano en Dublin y Columbus, Ohio.
+const BOOKSY = 'https://booksy.com/en-us/1707829_by-paolas_brows-lashes_31270_hilliard';
 
-PRECIOS PESTAÑAS: Natural nuevo $95 retoque $75 | Volumen nuevo $120-$135 retoque $95-$105 | Efecto Mojado nuevo $115 retoque $95 | Wispy/Anime/Espigas +$10 | Retiro y Botox $28
+const PROMPT = `Eres el asistente de comunicación de By Paolas (@by.paolas), negocio de extensiones de pestañas y servicios de cejas en Dublin y Columbus, Ohio. Respondes mensajes de clientas en nombre de Paola Serrano.
 
-PRECIOS CEJAS: Diseño y Epilación $28 | Diseño+Epilación+Tinte $38 | Laminado sin tinte $70 con tinte $80 | Tinte $18 | Hidratación $15 | Bozo $8
+PRECIOS PESTAÑAS:
+- Natural: nuevo $95 / retoque $75
+- Volumen: nuevo $120-$135 / retoque $95-$105
+- Efecto Mojado: nuevo $115 / retoque $95
+- Wispy / Anime / Espigas: +$10 a cualquier set
+- Retiro y Botox: $28
 
-POLÍTICAS:
-- Depósito $30 no reembolsable. Enviar en máximo 1 hora o se libera el espacio. Se descuenta del total.
-- Pago: Zelle bypaolas9@gmail.com (By Paolagsh LLC) | CashApp $Pginette9
-- Cancelar con mínimo 24h de aviso. Menos de 24h o no-show = pierde depósito.
-- Llegada +15min tarde = cita cancelada.
-- Retoques: 1 semana hasta 21 días máximo. Después = set nuevo.
-- Garantía gratis si reporte en menos de 3 días Y se siguió cuidado posterior.
-- Dirección exacta solo después de confirmar depósito. NUNCA antes.
-- Horario: Martes a viernes, 9:30 AM a 6:00 PM.
-- Citas fuera de horario: Disponibles con costo adicional de $15 a $20. Preguntar disponibilidad.
+PRECIOS CEJAS:
+- Diseño y Epilación: $28
+- Diseño, Epilación y Tinte: $38
+- Laminado sin tinte: $70 / con tinte: $80
+- Tinte: $18 / Hidratación: $15 / Bozo: $8
+
+HORARIO Y CITAS:
+- Horario: martes a viernes, 9:30 AM a 6:00 PM
+- Citas fuera de horario: disponibles con costo adicional de $15 a $20
 - Walk-ins: NO se aceptan. Solo cita previa.
-- Para disponibilidad y citas: Booksy https://booksy.com/en-us/1707829_by-paolas_brows-lashes_31270_hilliard o por DM directo.
+- Para agendar: Booksy en ${BOOKSY} o por DM directo
+- Al mencionar Booksy SIEMPRE incluye el link COMPLETO: ${BOOKSY}
 
-ANTES DE LA CITA: Sin rímel ni maquillaje en ojos | Retirar lentes de contacto | Ropa cómoda | Retirar pestañas postizas | Evitar mojar pestañas 24h después
+DEPÓSITO Y PAGO:
+- Depósito $30 no reembolsable requerido para confirmar. Se descuenta del total. Enviar en máximo 1 hora.
+- Zelle: bypaolas9@gmail.com (By Paolagsh LLC / Paola Serrano)
+- CashApp: $Pginette9 (Paola Serrano)
+- Sin depósito no hay cita confirmada.
 
-INSTRUCCIONES CRÍTICAS — SIGUE ESTAS REGLAS SIN EXCEPCIÓN:
-1. Detecta el idioma del mensaje y responde en ESE idioma.
-2. Tono cálido y profesional como Paola, nunca robótico.
-3. REGLA DE MÚLTIPLES PREGUNTAS: Si el mensaje tiene DOS O MÁS preguntas, DEBES responderlas TODAS. Responde la pregunta 1, luego la pregunta 2, sin omitir ninguna. NUNCA termines la respuesta habiendo ignorado alguna pregunta.
-4. PRECIOS — cuando pregunten por extensiones de pestañas, da TODOS los precios así: Natural: nuevo $95 / retoque $75. Volumen: nuevo $120-$135 / retoque $95-$105. Efecto Mojado: nuevo $115 / retoque $95.
-5. BOOKSY — cuando pregunten por disponibilidad o cómo agendar, escribe exactamente esto sin cortar: https://booksy.com/en-us/1707829_by-paolas_brows-lashes_31270_hilliard
-6. DEPÓSITO — cuando menciones citas o disponibilidad, agrega siempre: depósito $30 por Zelle bypaolas9@gmail.com o CashApp $Pginette9.
-7. DIRECCIÓN — nunca la compartas hasta que el depósito esté confirmado.
-8. FIRMA — termina siempre con: — By Paolas 🌸
-9. COMPLETITUD — nunca dejes una respuesta a medias. Responde todo lo que preguntaron.
+CANCELACIONES:
+- Mínimo 24 horas de aviso para reprogramar
+- Menos de 24h o no-show = pierde el depósito
+- Llegada con más de 15 minutos de retraso = cita cancelada
+
+RETOQUES Y GARANTÍA:
+- Retoques: desde 1 semana hasta 21 días máximo. Después = set nuevo.
+- Garantía: si hay problema en menos de 3 días Y se siguió el cuidado posterior = retoque gratis. Después = precio normal.
+
+ANTES DE LA CITA:
+- Sin rímel ni maquillaje en ojos, retirar lentes, ropa cómoda, sin pestañas postizas
+- Evitar mojar pestañas 24 horas después
+
+DESCUENTOS: No aplican.
+
+DIRECCIÓN: Solo se comparte después de confirmar el depósito. Nunca antes.
+
+REGLAS DE RESPUESTA — MUY IMPORTANTE:
+1. Detecta el idioma del mensaje. Si está en inglés, responde en inglés. Si está en español, responde en español.
+2. Tono cálido y personal, como Paola. No robótico.
+3. SI EL MENSAJE TIENE DOS O MÁS PREGUNTAS: respóndelas TODAS, una por una, en orden. No termines hasta haber respondido cada pregunta.
+4. Cuando menciones Booksy incluye SIEMPRE el link completo: ${BOOKSY}
+5. Si preguntan por cita o disponibilidad, menciona el depósito de $30 y métodos de pago.
+6. Nunca des la dirección antes de confirmar el depósito.
+7. Firma como: — By Paolas 🌸
+8. No cortes la respuesta a la mitad. Si hay varias preguntas, termina de responderlas todas.
 
 Mensaje de la clienta: "{{MENSAJE}}"
 
-Escribe únicamente la respuesta lista para enviar. Sin explicaciones ni comillas adicionales.`;
+Escribe únicamente la respuesta lista para enviar. Sin explicaciones previas.`;
 
+// ── localStorage helpers ──
+function getKey() { return localStorage.getItem('bp_gemini_key') || ''; }
+function saveApiKey() {
+  const key = document.getElementById('setupKey').value.trim();
+  if (!key || !key.startsWith('AIza')) {
+    alert('Por favor pega una API Key válida (empieza con AIza...)');
+    return;
+  }
+  localStorage.setItem('bp_gemini_key', key);
+  showTool();
+}
+function changeApiKey() {
+  localStorage.removeItem('bp_gemini_key');
+  document.getElementById('toolScreen').style.display = 'none';
+  document.getElementById('setupScreen').style.display = 'block';
+  document.getElementById('setupKey').value = '';
+}
+function showTool() {
+  document.getElementById('setupScreen').style.display = 'none';
+  document.getElementById('toolScreen').style.display = 'block';
+}
+
+// ── Init ──
+window.onload = function() {
+  if (getKey()) { showTool(); }
+};
+
+// ── UI helpers ──
 function showError(msg) {
-  const box = document.getElementById('errorBox');
-  box.textContent = '⚠️ ' + msg;
-  box.classList.remove('hidden');
+  const b = document.getElementById('errorBox');
+  b.textContent = '⚠️ ' + msg;
+  b.style.display = 'block';
 }
-function hideError() { document.getElementById('errorBox').classList.add('hidden'); }
-function hideApiBox() {
-  document.getElementById('apiBox').classList.add('hidden');
-  document.getElementById('apiConfigured').classList.remove('hidden');
-}
-function showApiBox() {
-  document.getElementById('apiBox').classList.remove('hidden');
-  document.getElementById('apiConfigured').classList.add('hidden');
-}
+function hideError() { document.getElementById('errorBox').style.display = 'none'; }
 function resetAll() {
   document.getElementById('clientMessage').value = '';
-  document.getElementById('responseBox').classList.add('hidden');
-  document.getElementById('emptyState').classList.remove('hidden');
+  document.getElementById('responseBox').style.display = 'none';
+  document.getElementById('emptyState').style.display = 'block';
   document.getElementById('clearBtn').style.display = 'none';
   hideError();
 }
 function copyResponse() {
-  const text = document.getElementById('responseText').innerText;
-  navigator.clipboard.writeText(text);
+  navigator.clipboard.writeText(document.getElementById('responseText').innerText);
   const btn = document.getElementById('copyBtn');
   btn.textContent = '¡Copiado! ✓';
   btn.classList.add('copied');
   setTimeout(() => { btn.textContent = 'Copiar'; btn.classList.remove('copied'); }, 2500);
 }
 
+// ── Generate ──
 async function generateResponse() {
-  const apiKey = document.getElementById('apiKey').value.trim();
-  const clientMessage = document.getElementById('clientMessage').value.trim();
+  const apiKey = getKey();
+  const msg = document.getElementById('clientMessage').value.trim();
   const btn = document.getElementById('generateBtn');
-
-  if (!apiKey) { showError('Ingresa tu Gemini API Key primero.'); return; }
-  if (!clientMessage) { showError('Pega el mensaje de la clienta primero.'); return; }
+  if (!msg) { showError('Pega el mensaje de la clienta primero.'); return; }
   hideError();
-
   btn.disabled = true;
-  btn.textContent = 'Generando con Gemini...';
-  document.getElementById('responseBox').classList.add('hidden');
-  document.getElementById('emptyState').classList.remove('hidden');
+  btn.textContent = 'Generando...';
+  document.getElementById('responseBox').style.display = 'none';
+  document.getElementById('emptyState').style.display = 'block';
 
-  const prompt = PROMPT.replace('{{MENSAJE}}', clientMessage);
+  const prompt = PROMPT.replace('{{MENSAJE}}', msg);
 
   try {
     const res = await fetch(
@@ -265,23 +271,18 @@ async function generateResponse() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           contents: [{ parts: [{ text: prompt }] }],
-          generationConfig: { temperature: 0.7, maxOutputTokens: 1200 }
+          generationConfig: { temperature: 0.7, maxOutputTokens: 1500 }
         })
       }
     );
-
     const data = await res.json();
     if (!res.ok) throw new Error(data?.error?.message || `Error ${res.status}`);
-
     const text = data.candidates?.[0]?.content?.parts?.[0]?.text?.trim();
     if (!text) throw new Error('Sin respuesta del servidor.');
-
     document.getElementById('responseText').textContent = text;
-    document.getElementById('responseBox').classList.remove('hidden');
-    document.getElementById('emptyState').classList.add('hidden');
+    document.getElementById('responseBox').style.display = 'block';
+    document.getElementById('emptyState').style.display = 'none';
     document.getElementById('clearBtn').style.display = 'block';
-    if (document.getElementById('apiKey').value) hideApiBox();
-
   } catch (err) {
     showError(err.message);
   } finally {
