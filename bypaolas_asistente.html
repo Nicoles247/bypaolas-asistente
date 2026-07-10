@@ -204,8 +204,8 @@ Escribe únicamente la respuesta lista para enviar. Sin explicaciones previas.`;
 function getKey() { return localStorage.getItem('bp_gemini_key') || ''; }
 function saveApiKey() {
   const key = document.getElementById('setupKey').value.trim();
-  if (!key || !key.startsWith('AIza')) {
-    alert('Por favor pega una API Key válida (empieza con AIza...)');
+  if (!key || key.length < 20) {
+    alert('Por favor pega tu API Key antes de continuar.');
     return;
   }
   localStorage.setItem('bp_gemini_key', key);
