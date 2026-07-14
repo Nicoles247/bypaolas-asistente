@@ -5,141 +5,309 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>By Paolas · Asistente de Respuestas</title>
 <style>
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { background: #FBF6F0; font-family: Arial, sans-serif; min-height: 100vh; padding-bottom: 60px; }
-  .header { background: #2B1A0E; padding: 28px 24px 22px; text-align: center; }
-  .logo { width: 52px; height: 52px; border-radius: 50%; background: rgba(212,175,55,0.15); border: 2px solid rgba(212,175,55,0.5); display: flex; align-items: center; justify-content: center; font-size: 24px; margin: 0 auto 12px; }
-  .badge { color: #C9A96E; font-size: 10px; letter-spacing: 3px; margin-bottom: 4px; text-transform: uppercase; }
-  .title { color: #F5EDE3; font-size: 20px; font-weight: 700; margin-bottom: 4px; font-family: Georgia, serif; }
-  .subtitle { color: #A08060; font-size: 12px; }
-  .container { max-width: 520px; margin: 0 auto; padding: 24px 20px; }
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:Arial,sans-serif;background:#FBF6F0;color:#2B1A0E;min-height:100vh;}
 
-  /* API KEY SETUP */
-  .setup-screen { background: #fff; border: 1.5px solid #E8D4BC; border-radius: 16px; padding: 28px 24px; margin-bottom: 20px; text-align: center; }
-  .setup-icon { font-size: 36px; margin-bottom: 12px; }
-  .setup-title { font-size: 17px; font-weight: 700; color: #2B1A0E; margin-bottom: 8px; }
-  .setup-desc { font-size: 13px; color: #8A7060; line-height: 1.6; margin-bottom: 20px; }
-  .setup-desc a { color: #C9A96E; }
-  .setup-input { width: 100%; padding: 13px 16px; border: 1.5px solid #E8D4BC; border-radius: 12px; font-size: 15px; font-family: Arial; color: #2B1A0E; outline: none; margin-bottom: 12px; transition: border-color 0.2s; }
-  .setup-input:focus { border-color: #C9A96E; }
-  .setup-btn { width: 100%; padding: 14px; background: #2B1A0E; color: #F5EDE3; border: none; border-radius: 12px; font-size: 15px; font-weight: 700; cursor: pointer; font-family: Arial; }
-  .setup-note { font-size: 11px; color: #B8A090; margin-top: 10px; }
+/* HEADER */
+.header{background:#2B1A0E;padding:20px 20px 16px;text-align:center;}
+.header-logo{width:44px;height:44px;border-radius:50%;background:rgba(212,175,55,0.15);border:2px solid rgba(212,175,55,0.5);display:flex;align-items:center;justify-content:center;font-size:20px;margin:0 auto 10px;}
+.header-badge{color:#C9A96E;font-size:9px;letter-spacing:3px;text-transform:uppercase;margin-bottom:3px;}
+.header-title{color:#F5EDE3;font-size:18px;font-weight:700;font-family:Georgia,serif;}
+.header-sub{color:#A08060;font-size:11px;margin-top:2px;}
 
-  /* MAIN TOOL */
-  .tool-screen { display: none; }
-  .api-status { display: flex; justify-content: space-between; align-items: center; background: #F0F8F0; border: 1px solid #C8E6C9; border-radius: 8px; padding: 8px 14px; margin-bottom: 18px; }
-  .api-status-text { font-size: 12px; color: #2E7D32; font-weight: 700; }
-  .api-change { font-size: 11px; color: #8A7060; text-decoration: underline; cursor: pointer; background: none; border: none; font-family: Arial; }
+/* TAB NAV */
+.tab-nav{display:flex;background:#1E120A;border-bottom:2px solid rgba(212,175,55,0.2);}
+.tab-btn{flex:1;padding:11px 8px;font-size:12px;font-weight:700;color:#8A6040;background:none;border:none;cursor:pointer;font-family:Arial;letter-spacing:0.5px;transition:all 0.2s;border-bottom:2px solid transparent;margin-bottom:-2px;}
+.tab-btn.active{color:#C9A96E;border-bottom-color:#C9A96E;}
+.tab-btn:hover:not(.active){color:#C9A96E;}
 
-  .field-label { display: block; font-size: 11px; font-weight: 700; color: #8A6A4A; letter-spacing: 1.5px; margin-bottom: 8px; text-transform: uppercase; }
-  textarea { width: 100%; padding: 14px 16px; border: 1.5px solid #E8D4BC; border-radius: 12px; font-size: 15px; font-family: Arial; background: #fff; color: #2B1A0E; resize: vertical; outline: none; line-height: 1.6; transition: border-color 0.2s; }
-  textarea:focus { border-color: #C9A96E; }
+.container{max-width:520px;margin:0 auto;padding:20px 16px 60px;}
 
-  .btn-row { display: flex; gap: 10px; margin: 14px 0 24px; }
-  .btn-primary { flex: 1; padding: 14px 20px; background: #2B1A0E; color: #F5EDE3; border: none; border-radius: 12px; font-size: 15px; font-weight: 700; cursor: pointer; font-family: Arial; }
-  .btn-primary:disabled { background: #C4A882; cursor: default; }
-  .btn-secondary { padding: 14px 16px; background: transparent; color: #8A6A4A; border: 1.5px solid #E8D4BC; border-radius: 12px; font-size: 14px; cursor: pointer; font-family: Arial; display: none; }
+/* SETUP SCREEN */
+.setup-card{background:#fff;border:1px solid #E8D4BC;border-radius:16px;padding:28px 24px;text-align:center;margin-top:20px;}
+.setup-icon{font-size:40px;margin-bottom:12px;}
+.setup-title{font-size:18px;font-weight:700;color:#2B1A0E;margin-bottom:6px;font-family:Georgia,serif;}
+.setup-once{font-size:12px;font-weight:700;color:#D9651A;background:#FFF3E5;border-radius:6px;padding:6px 12px;display:inline-block;margin-bottom:14px;}
+.setup-desc{font-size:12px;color:#8A7060;line-height:1.6;margin-bottom:16px;}
+.setup-desc a{color:#C9A96E;}
+.setup-input{width:100%;padding:12px 14px;border:1.5px solid #E8D4BC;border-radius:10px;font-size:14px;color:#2B1A0E;margin-bottom:10px;}
+.setup-input:focus{outline:none;border-color:#C9A96E;}
+.setup-btn{width:100%;padding:13px;background:#2B1A0E;color:#F5EDE3;border:none;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;font-family:Arial;}
+.setup-note{font-size:10px;color:#B8A090;margin-top:8px;}
 
-  .error-box { background: #FDF0EE; border: 1px solid #E8B4A8; border-radius: 8px; padding: 10px 14px; font-size: 13px; color: #A03020; margin-bottom: 14px; display: none; }
+/* RESPONSE VIEW */
+.field-label{display:block;font-size:10px;font-weight:700;color:#8A6A4A;letter-spacing:1.5px;margin-bottom:6px;text-transform:uppercase;}
+textarea{width:100%;padding:12px 14px;border:1.5px solid #E8D4BC;border-radius:10px;font-size:14px;font-family:Arial;background:#fff;color:#2B1A0E;resize:vertical;outline:none;line-height:1.6;}
+textarea:focus{border-color:#C9A96E;}
 
-  .response-box { background: #fff; border: 1.5px solid #E8D4BC; border-radius: 14px; overflow: hidden; box-shadow: 0 2px 12px rgba(43,26,14,0.06); margin-bottom: 24px; display: none; }
-  .response-header { background: #F5EDE3; padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #E8D4BC; }
-  .response-label { font-size: 11px; font-weight: 700; color: #8A6A4A; letter-spacing: 1.5px; text-transform: uppercase; }
-  .btn-copy { background: transparent; color: #8A6A4A; border: 1px solid #C9A96E; border-radius: 20px; padding: 4px 14px; font-size: 12px; cursor: pointer; font-family: Arial; transition: all 0.2s; }
-  .btn-copy.copied { background: #2B1A0E; color: #F5EDE3; }
-  .response-text { padding: 18px 20px; font-size: 15px; line-height: 1.8; color: #2B1A0E; white-space: pre-wrap; }
-  .response-footer { padding: 10px 20px 14px; border-top: 1px solid #F0E4D4; font-size: 12px; color: #B8A090; font-style: italic; }
+.btn-generate{width:100%;padding:13px;background:#2B1A0E;color:#F5EDE3;border:none;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;font-family:Arial;margin:12px 0;}
+.btn-generate:disabled{background:#C4A882;cursor:default;}
 
-  .empty-state { text-align: center; padding: 28px 20px; color: #C4A882; }
-  .empty-icon { font-size: 32px; margin-bottom: 10px; }
+.response-box{background:#fff;border:1.5px solid #E8D4BC;border-radius:12px;overflow:hidden;margin-bottom:12px;}
+.response-header{background:#F5EDE3;padding:10px 14px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #E8D4BC;}
+.response-label{font-size:10px;font-weight:700;color:#8A6A4A;letter-spacing:1.5px;text-transform:uppercase;}
+.btn-copy{background:transparent;color:#8A6A4A;border:1px solid #C9A96E;border-radius:16px;padding:3px 12px;font-size:11px;cursor:pointer;font-family:Arial;transition:all 0.2s;}
+.btn-copy.copied{background:#2B1A0E;color:#F5EDE3;}
+.response-text{padding:14px 16px;font-size:14px;line-height:1.8;color:#2B1A0E;white-space:pre-wrap;}
+.response-tip{padding:8px 16px 12px;border-top:1px solid #F0E4D4;font-size:11px;color:#B8A090;font-style:italic;}
 
-  .ref-box { background: #fff; border: 1px solid #E8D4BC; border-radius: 12px; overflow: hidden; }
-  .ref-header { background: #2B1A0E; padding: 10px 16px; font-size: 11px; color: #C9A96E; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; }
-  .ref-row { display: flex; gap: 12px; padding: 10px 16px; border-bottom: 1px solid #F5EDE3; align-items: flex-start; }
-  .ref-row:last-child { border-bottom: none; }
-  .ref-label { font-size: 13px; font-weight: 700; color: #5C3D1E; min-width: 100px; flex-shrink: 0; }
-  .ref-val { font-size: 12px; color: #6B4C32; line-height: 1.5; }
-  .footer-note { text-align: center; margin-top: 24px; font-size: 11px; color: #C4A882; }
+/* DONE BUTTON */
+.btn-done{width:100%;padding:14px;background:#C9A96E;color:#2B1A0E;border:none;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;font-family:Arial;margin-top:4px;transition:all 0.2s;}
+.btn-done:hover{background:#B8986A;}
+
+.empty-state{text-align:center;padding:28px 16px;color:#C4A882;}
+.empty-icon{font-size:28px;margin-bottom:8px;}
+
+.error-box{background:#FDF0EE;border:1px solid #E8B4A8;border-radius:8px;padding:10px 14px;font-size:12px;color:#A03020;margin-bottom:12px;display:none;}
+
+/* API STATUS BAR */
+.api-bar{display:flex;justify-content:space-between;align-items:center;background:#F0F8F0;border:1px solid #C8E6C9;border-radius:8px;padding:7px 12px;margin-bottom:14px;}
+.api-bar-text{font-size:11px;color:#2E7D32;font-weight:700;}
+.api-change{background:none;border:none;color:#8A7060;cursor:pointer;font-size:11px;text-decoration:underline;font-family:Arial;}
+
+/* FEEDBACK VIEW */
+.feedback-card{background:#fff;border:1.5px solid #E8D4BC;border-radius:14px;overflow:hidden;margin-top:8px;}
+.feedback-header{background:#2B1A0E;padding:14px 18px;}
+.feedback-title{color:#C9A96E;font-size:13px;font-weight:700;margin-bottom:2px;}
+.feedback-sub{color:#8A6040;font-size:11px;}
+.feedback-body{padding:16px;}
+.q-label{font-size:11px;font-weight:700;color:#8A6A4A;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px;display:block;}
+.rating-row{display:flex;gap:8px;margin-bottom:16px;}
+.rating-btn{flex:1;padding:10px 6px;border:1.5px solid #E8D4BC;border-radius:8px;background:#fff;font-size:12px;cursor:pointer;font-family:Arial;text-align:center;transition:all 0.15s;color:#5C3D1E;}
+.rating-btn.selected{border-color:#C9A96E;background:#FFF3E5;font-weight:700;}
+.rating-btn.r-si.selected{border-color:#2E7D32;background:#E8F5E9;color:#2E7D32;}
+.rating-btn.r-casi.selected{border-color:#F57C00;background:#FFF3E0;color:#E65100;}
+.rating-btn.r-no.selected{border-color:#C62828;background:#FFEBEE;color:#C62828;}
+
+.tipo-select{width:100%;padding:10px 12px;border:1.5px solid #E8D4BC;border-radius:8px;font-size:13px;background:#fff;color:#2B1A0E;margin-bottom:14px;}
+.tipo-select:focus{outline:none;border-color:#C9A96E;}
+.cambio-input{width:100%;padding:10px 12px;border:1.5px solid #E8D4BC;border-radius:8px;font-size:13px;font-family:Arial;color:#2B1A0E;resize:none;}
+.cambio-input:focus{outline:none;border-color:#C9A96E;}
+.feedback-btns{display:flex;gap:8px;margin-top:14px;}
+.btn-save-fb{flex:2;padding:12px;background:#2B1A0E;color:#F5EDE3;border:none;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;font-family:Arial;}
+.btn-skip{flex:1;padding:12px;background:transparent;color:#8A6A4A;border:1.5px solid #E8D4BC;border-radius:8px;font-size:13px;cursor:pointer;font-family:Arial;}
+.feedback-preview{background:#FBF6F0;border-radius:8px;padding:10px 12px;margin-bottom:14px;font-size:12px;color:#5C3D1E;line-height:1.5;border-left:3px solid #C9A96E;}
+.fb-preview-label{font-size:10px;font-weight:700;color:#C9A96E;letter-spacing:1px;text-transform:uppercase;margin-bottom:4px;}
+
+/* DASHBOARD VIEW */
+.dash-section{margin-bottom:20px;}
+.dash-title{font-size:11px;font-weight:700;color:#C9A96E;letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid rgba(212,175,55,0.2);}
+.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px;}
+.stat-card{background:#fff;border:1px solid #E8D4BC;border-radius:10px;padding:14px;text-align:center;}
+.stat-num{font-size:26px;font-weight:700;color:#2B1A0E;font-family:Georgia,serif;line-height:1;}
+.stat-label{font-size:10px;color:#8A7060;margin-top:4px;line-height:1.3;}
+.stat-card.green .stat-num{color:#2E7D32;}
+.stat-card.orange .stat-num{color:#E65100;}
+.stat-card.red .stat-num{color:#C62828;}
+.stat-card.gold .stat-num{color:#C9A96E;}
+
+.bar-row{display:flex;align-items:center;gap:8px;margin-bottom:6px;}
+.bar-label{font-size:11px;color:#5C3D1E;min-width:80px;}
+.bar-track{flex:1;background:#EFE3D3;border-radius:4px;height:8px;overflow:hidden;}
+.bar-fill{height:100%;border-radius:4px;background:#C9A96E;transition:width 0.5s;}
+.bar-fill.green{background:#4CAF50;}
+.bar-fill.orange{background:#FF9800;}
+.bar-fill.red{background:#F44336;}
+.bar-count{font-size:10px;color:#8A7060;min-width:20px;text-align:right;}
+
+.entry-list{display:flex;flex-direction:column;gap:8px;max-height:320px;overflow-y:auto;}
+.entry-card{background:#fff;border:1px solid #E8D4BC;border-radius:8px;padding:10px 12px;}
+.entry-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:4px;}
+.entry-tipo{font-size:10px;font-weight:700;color:#C9A96E;text-transform:uppercase;letter-spacing:1px;}
+.entry-date{font-size:10px;color:#B8A090;}
+.entry-rating{font-size:12px;margin-bottom:3px;}
+.entry-cambio{font-size:11px;color:#8A7060;font-style:italic;}
+.entry-msg-preview{font-size:11px;color:#5C3D1E;line-height:1.4;margin-bottom:3px;}
+
+.btn-export{width:100%;padding:11px;background:transparent;color:#C9A96E;border:1.5px solid #C9A96E;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;font-family:Arial;margin-top:8px;}
+.btn-clear-data{width:100%;padding:9px;background:transparent;color:#B8A090;border:1px solid #E8D4BC;border-radius:8px;font-size:12px;cursor:pointer;font-family:Arial;margin-top:6px;}
+.empty-dash{text-align:center;padding:32px 16px;color:#C4A882;font-size:13px;}
+
+/* REF TABLE */
+.ref-box{background:#fff;border:1px solid #E8D4BC;border-radius:10px;overflow:hidden;margin-top:16px;}
+.ref-header-bg{background:#2B1A0E;padding:8px 14px;font-size:10px;color:#C9A96E;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;}
+.ref-row{display:flex;gap:10px;padding:8px 14px;border-bottom:1px solid #F5EDE3;align-items:flex-start;}
+.ref-row:last-child{border-bottom:none;}
+.ref-lbl{font-size:12px;font-weight:700;color:#5C3D1E;min-width:95px;flex-shrink:0;}
+.ref-val{font-size:11px;color:#6B4C32;line-height:1.4;}
+
+.footer-note{text-align:center;margin-top:20px;font-size:10px;color:#C4A882;}
 </style>
 </head>
 <body>
 
 <div class="header">
-  <div class="logo">🌸</div>
-  <div class="badge">By Paolas · Powered by Gemini AI</div>
-  <div class="title">Asistente de Respuestas</div>
-  <div class="subtitle">Pega el mensaje de tu clienta · Recibe la respuesta lista</div>
+  <div class="header-logo">🌸</div>
+  <div class="header-badge">By Paolas · Powered by Gemini AI</div>
+  <div class="header-title">Asistente de Respuestas</div>
+  <div class="header-sub" id="headerSub">Pega el mensaje de tu clienta · Recibe la respuesta lista</div>
 </div>
 
-<div class="container">
+<!-- TAB NAV -->
+<div class="tab-nav" id="tabNav" style="display:none;">
+  <button class="tab-btn active" onclick="switchTab('response')" id="tabResponse">💬 Respuestas</button>
+  <button class="tab-btn" onclick="switchTab('dashboard')" id="tabDashboard">📊 Dashboard</button>
+</div>
 
-  <!-- SETUP SCREEN (shown only first time) -->
-  <div class="setup-screen" id="setupScreen">
-    <div class="setup-icon">🔑</div>
-    <div class="setup-title">Configuración inicial</div>
-    <div class="setup-desc">
-      Solo necesitas hacer esto <strong>una vez</strong>.<br>
-      Tu clave se guardará en este dispositivo automáticamente.<br><br>
-      Consíguela gratis en <a href="https://aistudio.google.com" target="_blank">aistudio.google.com</a> → "Get API Key"
+<!-- ══════════════════════════════════════
+     SETUP SCREEN
+══════════════════════════════════════ -->
+<div id="setupScreen">
+  <div class="container">
+    <div class="setup-card">
+      <div class="setup-icon">🔑</div>
+      <div class="setup-title">Configuración inicial</div>
+      <div class="setup-once">Solo haces esto una vez</div>
+      <div class="setup-desc">
+        Tu clave se guarda en este dispositivo automáticamente.<br>
+        Consíguela gratis en <a href="https://aistudio.google.com" target="_blank">aistudio.google.com</a> → "Get API Key"
+      </div>
+      <input type="password" class="setup-input" id="setupKey" placeholder="Pega tu API Key aquí..." />
+      <button class="setup-btn" onclick="saveKey()">✓ Guardar y comenzar</button>
+      <div class="setup-note">Tu clave nunca sale de este dispositivo.</div>
     </div>
-    <input type="password" class="setup-input" id="setupKey" placeholder="Pega tu API Key aquí (AIza...)" />
-    <button class="setup-btn" onclick="saveApiKey()">✓ Guardar y comenzar</button>
-    <div class="setup-note">Tu clave nunca sale de tu dispositivo.</div>
   </div>
+</div>
 
-  <!-- MAIN TOOL SCREEN -->
-  <div class="tool-screen" id="toolScreen">
-
-    <div class="api-status">
-      <span class="api-status-text">🔑 API Key configurada ✓</span>
-      <button class="api-change" onclick="changeApiKey()">Cambiar</button>
+<!-- ══════════════════════════════════════
+     RESPONSE VIEW
+══════════════════════════════════════ -->
+<div id="responseView" style="display:none;">
+  <div class="container">
+    <div class="api-bar">
+      <span class="api-bar-text">🔑 API Key configurada ✓</span>
+      <button class="api-change" onclick="changeKey()">Cambiar</button>
     </div>
 
-    <div style="margin-bottom:14px;">
-      <label class="field-label">Mensaje de la clienta</label>
-      <textarea id="clientMessage" rows="5" placeholder="Pega aquí el mensaje de tu clienta — en inglés o español..."></textarea>
-    </div>
+    <label class="field-label">Mensaje de la clienta</label>
+    <textarea id="clientMsg" rows="4" placeholder="Pega aquí el mensaje de tu clienta — en inglés o español..."></textarea>
+
+    <button class="btn-generate" id="generateBtn" onclick="generateResponse()">✨ Generar respuesta</button>
 
     <div class="error-box" id="errorBox"></div>
 
-    <div class="btn-row">
-      <button class="btn-primary" id="generateBtn" onclick="generateResponse()">✨ Generar respuesta</button>
-      <button class="btn-secondary" id="clearBtn" onclick="resetAll()">Limpiar</button>
-    </div>
-
-    <div class="response-box" id="responseBox">
+    <div id="responseBox" class="response-box" style="display:none;">
       <div class="response-header">
         <div class="response-label">Respuesta lista ✓</div>
         <button class="btn-copy" id="copyBtn" onclick="copyResponse()">Copiar</button>
       </div>
       <div class="response-text" id="responseText"></div>
-      <div class="response-footer">Revisa antes de enviar — ajusta si el tono no es tuyo 🌸</div>
+      <div class="response-tip">Revisa antes de enviar — ajusta si el tono no es tuyo 🌸</div>
     </div>
+
+    <button id="doneBtn" class="btn-done" onclick="showFeedback()" style="display:none;">
+      ✅ Listo, siguiente mensaje
+    </button>
 
     <div class="empty-state" id="emptyState">
       <div class="empty-icon">💬</div>
-      <p style="font-size:13px;line-height:1.6;">La respuesta aparecerá aquí<br>lista para copiar y enviar</p>
+      <p style="font-size:12px;line-height:1.6;">La respuesta aparecerá aquí<br>lista para copiar y enviar</p>
     </div>
 
     <div class="ref-box">
-      <div class="ref-header">Referencia rápida de políticas</div>
-      <div class="ref-row"><span class="ref-label">🕐 Horario</span><span class="ref-val">Mar–Vie 9:30 AM – 6:00 PM · After-hours +$15–$20 · Sin walk-ins</span></div>
-      <div class="ref-row"><span class="ref-label">💳 Depósito</span><span class="ref-val">$30 no reembolsable · máximo 1 hora para enviarlo</span></div>
-      <div class="ref-row"><span class="ref-label">💰 Zelle</span><span class="ref-val">bypaolas9@gmail.com (By Paolagsh LLC)</span></div>
-      <div class="ref-row"><span class="ref-label">💚 CashApp</span><span class="ref-val">$Pginette9 (Paola Serrano)</span></div>
-      <div class="ref-row"><span class="ref-label">📅 Booksy</span><span class="ref-val">booksy.com/en-us/1707829_by-paolas_brows-lashes_31270_hilliard</span></div>
-      <div class="ref-row"><span class="ref-label">❌ Cancelación</span><span class="ref-val">Mínimo 24h · No-show = pierde depósito</span></div>
-      <div class="ref-row"><span class="ref-label">✨ Retoques</span><span class="ref-val">1 semana – 21 días · Después = set nuevo</span></div>
-      <div class="ref-row"><span class="ref-label">🛡️ Garantía</span><span class="ref-val">Gratis si menos de 3 días + cuidado seguido</span></div>
-      <div class="ref-row"><span class="ref-label">⏰ Tardanza</span><span class="ref-val">Más de 15 min = cita cancelada</span></div>
+      <div class="ref-header-bg">Referencia rápida de políticas</div>
+      <div class="ref-row"><span class="ref-lbl">🕐 Horario</span><span class="ref-val">Mar–Vie 9:30 AM – 6:00 PM · After-hours +$15–$20 · Sin walk-ins</span></div>
+      <div class="ref-row"><span class="ref-lbl">💳 Depósito</span><span class="ref-val">$30 no reembolsable · máximo 1 hora</span></div>
+      <div class="ref-row"><span class="ref-lbl">💰 Zelle</span><span class="ref-val">bypaolas9@gmail.com (By Paolagsh LLC)</span></div>
+      <div class="ref-row"><span class="ref-lbl">💚 CashApp</span><span class="ref-val">$Pginette9 (Paola Serrano)</span></div>
+      <div class="ref-row"><span class="ref-lbl">📅 Booksy</span><span class="ref-val">booksy.com/en-us/1707829_by-paolas_brows-lashes_31270_hilliard</span></div>
+      <div class="ref-row"><span class="ref-lbl">❌ Cancelación</span><span class="ref-val">Mínimo 24h · No-show = pierde depósito</span></div>
+      <div class="ref-row"><span class="ref-lbl">✨ Retoques</span><span class="ref-val">1 semana – 21 días · Después = set nuevo</span></div>
+      <div class="ref-row"><span class="ref-lbl">🛡️ Garantía</span><span class="ref-val">Gratis si menos de 3 días + cuidado seguido</span></div>
     </div>
-
     <div class="footer-note">Powered by Gemini AI · Growth Partner AI × By Paolas</div>
   </div>
 </div>
 
+<!-- ══════════════════════════════════════
+     FEEDBACK VIEW
+══════════════════════════════════════ -->
+<div id="feedbackView" style="display:none;">
+  <div class="container">
+    <div class="feedback-card">
+      <div class="feedback-header">
+        <div class="feedback-title">⭐ ¿Cómo fue esa respuesta?</div>
+        <div class="feedback-sub">30 segundos · Nos ayuda a mejorar para ti</div>
+      </div>
+      <div class="feedback-body">
+        <div class="feedback-preview">
+          <div class="fb-preview-label">Respuesta enviada</div>
+          <div id="fbPreviewText"></div>
+        </div>
+
+        <span class="q-label">¿Sonó como tú?</span>
+        <div class="rating-row">
+          <button class="rating-btn r-si" onclick="selectRating('si',this)">✅ Sí</button>
+          <button class="rating-btn r-casi" onclick="selectRating('casi',this)">⚠️ Casi</button>
+          <button class="rating-btn r-no" onclick="selectRating('no',this)">❌ No</button>
+        </div>
+
+        <span class="q-label">¿De qué era el mensaje?</span>
+        <select class="tipo-select" id="fbTipo">
+          <option value="">Selecciona...</option>
+          <option>Precios de pestañas</option>
+          <option>Precios de cejas</option>
+          <option>Disponibilidad / cita</option>
+          <option>Depósito</option>
+          <option>Cancelación / reprogramar</option>
+          <option>Retoques</option>
+          <option>Garantía</option>
+          <option>Horarios</option>
+          <option>Ubicación</option>
+          <option>Otro</option>
+        </select>
+
+        <span class="q-label">¿Qué cambiaste antes de enviar? <span style="font-weight:400;color:#B8A090;">(opcional)</span></span>
+        <textarea class="cambio-input" id="fbCambio" rows="2" placeholder="Ej: cambié el tono, agregué un emoji, corregí el precio..."></textarea>
+
+        <div class="feedback-btns">
+          <button class="btn-save-fb" onclick="saveFeedback()">💾 Guardar y continuar</button>
+          <button class="btn-skip" onclick="skipFeedback()">Saltar →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     DASHBOARD VIEW
+══════════════════════════════════════ -->
+<div id="dashboardView" style="display:none;">
+  <div class="container">
+    <div class="dash-section">
+      <div class="dash-title">📊 Resumen general</div>
+      <div class="stat-grid" id="statGrid">
+        <div class="stat-card gold"><div class="stat-num" id="statTotal">0</div><div class="stat-label">Respuestas evaluadas</div></div>
+        <div class="stat-card green"><div class="stat-num" id="statSi">0%</div><div class="stat-label">Sonaron como Paola ✅</div></div>
+        <div class="stat-card orange"><div class="stat-num" id="statCasi">0%</div><div class="stat-label">Casi perfectas ⚠️</div></div>
+        <div class="stat-card red"><div class="stat-num" id="statNo">0%</div><div class="stat-label">Necesitan mejora ❌</div></div>
+      </div>
+    </div>
+
+    <div class="dash-section">
+      <div class="dash-title">📋 Preguntas más frecuentes</div>
+      <div id="tipoChart"></div>
+    </div>
+
+    <div class="dash-section">
+      <div class="dash-title">🕐 Últimas evaluaciones</div>
+      <div id="entryList"><div class="empty-dash">Todavía no hay evaluaciones.<br>Usa la herramienta y dale feedback a algunas respuestas.</div></div>
+    </div>
+
+    <button class="btn-export" onclick="exportCSV()">⬇️ Exportar datos CSV</button>
+    <button class="btn-clear-data" onclick="clearData()">🗑️ Borrar todos los datos</button>
+    <div class="footer-note" style="margin-top:12px;">Vista interna · Growth Partner AI × By Paolas</div>
+  </div>
+</div>
+
 <script>
+// ══════════════════════════════════
+// CONSTANTS & STATE
+// ══════════════════════════════════
 const BOOKSY = 'https://booksy.com/en-us/1707829_by-paolas_brows-lashes_31270_hilliard';
+let currentRating = null;
+let currentResponse = '';
+let currentMessage = '';
 
 const PROMPT = `Eres el asistente de comunicación de By Paolas (@by.paolas), negocio de extensiones de pestañas y servicios de cejas en Dublin y Columbus, Ohio. Respondes mensajes de clientas en nombre de Paola Serrano.
 
@@ -151,143 +319,286 @@ PRECIOS PESTAÑAS:
 - Retiro y Botox: $28
 
 PRECIOS CEJAS:
-- Diseño y Epilación: $28
-- Diseño, Epilación y Tinte: $38
+- Diseño y Epilación: $28 | Diseño, Epilación y Tinte: $38
 - Laminado sin tinte: $70 / con tinte: $80
-- Tinte: $18 / Hidratación: $15 / Bozo: $8
+- Tinte: $18 | Hidratación: $15 | Bozo: $8
 
 HORARIO Y CITAS:
-- Horario: martes a viernes, 9:30 AM a 6:00 PM
-- Citas fuera de horario: disponibles con costo adicional de $15 a $20
-- Walk-ins: NO se aceptan. Solo cita previa.
-- Para agendar: Booksy en ${BOOKSY} o por DM directo
-- Al mencionar Booksy SIEMPRE incluye el link COMPLETO: ${BOOKSY}
+- Martes a viernes, 9:30 AM a 6:00 PM
+- After-hours: disponibles con +$15 a $20
+- Walk-ins: NO. Solo cita previa.
+- Agendar: ${BOOKSY} — SIEMPRE incluir el link completo cuando pregunten por citas o disponibilidad
 
 DEPÓSITO Y PAGO:
-- Depósito $30 no reembolsable requerido para confirmar. Se descuenta del total. Enviar en máximo 1 hora.
-- Zelle: bypaolas9@gmail.com (By Paolagsh LLC / Paola Serrano)
-- CashApp: $Pginette9 (Paola Serrano)
+- $30 no reembolsable. Máximo 1 hora para enviarlo. Se descuenta del total.
+- Zelle: bypaolas9@gmail.com (By Paolagsh LLC) | CashApp: $Pginette9
 - Sin depósito no hay cita confirmada.
 
-CANCELACIONES:
-- Mínimo 24 horas de aviso para reprogramar
-- Menos de 24h o no-show = pierde el depósito
-- Llegada con más de 15 minutos de retraso = cita cancelada
+CANCELACIONES: Mínimo 24h de aviso. Menos de 24h o no-show = pierde depósito. +15 min tarde = cita cancelada.
 
 RETOQUES Y GARANTÍA:
-- Retoques: desde 1 semana hasta 21 días máximo. Después = set nuevo.
-- Garantía: si hay problema en menos de 3 días Y se siguió el cuidado posterior = retoque gratis. Después = precio normal.
+- Retoques: 1 semana a 21 días. Después = set nuevo.
+- Garantía gratis si menos de 3 días Y siguió cuidado posterior.
 
-ANTES DE LA CITA:
-- Sin rímel ni maquillaje en ojos, retirar lentes, ropa cómoda, sin pestañas postizas
-- Evitar mojar pestañas 24 horas después
+ANTES DE LA CITA: Sin rímel, sin lentes de contacto, sin pestañas postizas, ropa cómoda. Sin mojar pestañas 24h después.
 
 DESCUENTOS: No aplican.
+DIRECCIÓN: Solo después de confirmar depósito. Nunca antes.
 
-DIRECCIÓN: Solo se comparte después de confirmar el depósito. Nunca antes.
-
-REGLAS DE RESPUESTA — MUY IMPORTANTE:
-1. Detecta el idioma del mensaje. Si está en inglés, responde en inglés. Si está en español, responde en español.
-2. Tono cálido y personal, como Paola. No robótico.
-3. SI EL MENSAJE TIENE DOS O MÁS PREGUNTAS: respóndelas TODAS, una por una, en orden. No termines hasta haber respondido cada pregunta.
-4. Cuando menciones Booksy incluye SIEMPRE el link completo: ${BOOKSY}
-5. Si preguntan por cita o disponibilidad, menciona el depósito de $30 y métodos de pago.
-6. Nunca des la dirección antes de confirmar el depósito.
-7. Firma como: — By Paolas 🌸
-8. No cortes la respuesta a la mitad. Si hay varias preguntas, termina de responderlas todas.
+REGLAS CRÍTICAS:
+1. Detecta el idioma y responde en ESE idioma.
+2. Tono cálido y personal como Paola, no robótico.
+3. Si hay DOS O MÁS preguntas, respóndelas TODAS en orden. NO termines hasta responderlas todas.
+4. Al mencionar Booksy incluye SIEMPRE: ${BOOKSY}
+5. Si preguntan por cita, menciona depósito $30 y métodos de pago.
+6. Nunca des dirección antes del depósito.
+7. Firma: — By Paolas 🌸
+8. Nunca cortes la respuesta a mitad.
 
 Mensaje de la clienta: "{{MENSAJE}}"
 
-Escribe únicamente la respuesta lista para enviar. Sin explicaciones previas.`;
+Escribe SOLO la respuesta lista para enviar.`;
 
-// ── localStorage helpers ──
-function getKey() { return localStorage.getItem('bp_gemini_key') || ''; }
-function saveApiKey() {
-  const key = document.getElementById('setupKey').value.trim();
-  if (!key || key.length < 20) {
-    alert('Por favor pega tu API Key antes de continuar.');
-    return;
-  }
-  localStorage.setItem('bp_gemini_key', key);
-  showTool();
+// ══════════════════════════════════
+// KEY MANAGEMENT
+// ══════════════════════════════════
+function getKey(){return localStorage.getItem('bp_gemini_key')||'';}
+function saveKey(){
+  const k=document.getElementById('setupKey').value.trim();
+  if(!k||k.length<20){alert('Por favor pega tu API Key antes de continuar.');return;}
+  localStorage.setItem('bp_gemini_key',k);
+  showMainApp();
 }
-function changeApiKey() {
+function changeKey(){
   localStorage.removeItem('bp_gemini_key');
-  document.getElementById('toolScreen').style.display = 'none';
-  document.getElementById('setupScreen').style.display = 'block';
-  document.getElementById('setupKey').value = '';
+  document.getElementById('setupScreen').style.display='block';
+  document.getElementById('responseView').style.display='none';
+  document.getElementById('dashboardView').style.display='none';
+  document.getElementById('feedbackView').style.display='none';
+  document.getElementById('tabNav').style.display='none';
 }
-function showTool() {
-  document.getElementById('setupScreen').style.display = 'none';
-  document.getElementById('toolScreen').style.display = 'block';
+function showMainApp(){
+  document.getElementById('setupScreen').style.display='none';
+  document.getElementById('tabNav').style.display='flex';
+  switchTab('response');
 }
 
-// ── Init ──
-window.onload = function() {
-  if (getKey()) { showTool(); }
+window.onload=function(){
+  if(getKey()){showMainApp();}
 };
 
-// ── UI helpers ──
-function showError(msg) {
-  const b = document.getElementById('errorBox');
-  b.textContent = '⚠️ ' + msg;
-  b.style.display = 'block';
+// ══════════════════════════════════
+// TAB SWITCHING
+// ══════════════════════════════════
+function switchTab(tab){
+  ['response','dashboard','feedback'].forEach(t=>{
+    document.getElementById(t+'View').style.display='none';
+  });
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+
+  if(tab==='response'){
+    document.getElementById('responseView').style.display='block';
+    document.getElementById('tabResponse').classList.add('active');
+    document.getElementById('headerSub').textContent='Pega el mensaje de tu clienta · Recibe la respuesta lista';
+  } else if(tab==='dashboard'){
+    document.getElementById('dashboardView').style.display='block';
+    document.getElementById('tabDashboard').classList.add('active');
+    document.getElementById('headerSub').textContent='Monitoreo de calidad de respuestas';
+    renderDashboard();
+  } else if(tab==='feedback'){
+    document.getElementById('feedbackView').style.display='block';
+    document.getElementById('headerSub').textContent='Evalúa esta respuesta';
+  }
 }
-function hideError() { document.getElementById('errorBox').style.display = 'none'; }
-function resetAll() {
-  document.getElementById('clientMessage').value = '';
-  document.getElementById('responseBox').style.display = 'none';
-  document.getElementById('emptyState').style.display = 'block';
-  document.getElementById('clearBtn').style.display = 'none';
+
+// ══════════════════════════════════
+// GENERATE RESPONSE
+// ══════════════════════════════════
+function showError(m){const b=document.getElementById('errorBox');b.textContent='⚠️ '+m;b.style.display='block';}
+function hideError(){document.getElementById('errorBox').style.display='none';}
+
+async function generateResponse(){
+  const msg=document.getElementById('clientMsg').value.trim();
+  const btn=document.getElementById('generateBtn');
+  if(!msg){showError('Pega el mensaje de la clienta primero.');return;}
   hideError();
-}
-function copyResponse() {
-  navigator.clipboard.writeText(document.getElementById('responseText').innerText);
-  const btn = document.getElementById('copyBtn');
-  btn.textContent = '¡Copiado! ✓';
-  btn.classList.add('copied');
-  setTimeout(() => { btn.textContent = 'Copiar'; btn.classList.remove('copied'); }, 2500);
-}
+  btn.disabled=true;btn.textContent='Generando...';
+  document.getElementById('responseBox').style.display='none';
+  document.getElementById('doneBtn').style.display='none';
+  document.getElementById('emptyState').style.display='block';
 
-// ── Generate ──
-async function generateResponse() {
-  const apiKey = getKey();
-  const msg = document.getElementById('clientMessage').value.trim();
-  const btn = document.getElementById('generateBtn');
-  if (!msg) { showError('Pega el mensaje de la clienta primero.'); return; }
-  hideError();
-  btn.disabled = true;
-  btn.textContent = 'Generando...';
-  document.getElementById('responseBox').style.display = 'none';
-  document.getElementById('emptyState').style.display = 'block';
-
-  const prompt = PROMPT.replace('{{MENSAJE}}', msg);
-
-  try {
-    const res = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`,
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          contents: [{ parts: [{ text: prompt }] }],
-          generationConfig: { temperature: 0.7, maxOutputTokens: 1500 }
-        })
-      }
+  const prompt=PROMPT.replace('{{MENSAJE}}',msg);
+  try{
+    const res=await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${getKey()}`,
+      {method:'POST',headers:{'Content-Type':'application/json'},
+       body:JSON.stringify({contents:[{parts:[{text:prompt}]}],generationConfig:{temperature:0.7,maxOutputTokens:1500}})}
     );
-    const data = await res.json();
-    if (!res.ok) throw new Error(data?.error?.message || `Error ${res.status}`);
-    const text = data.candidates?.[0]?.content?.parts?.[0]?.text?.trim();
-    if (!text) throw new Error('Sin respuesta del servidor.');
-    document.getElementById('responseText').textContent = text;
-    document.getElementById('responseBox').style.display = 'block';
-    document.getElementById('emptyState').style.display = 'none';
-    document.getElementById('clearBtn').style.display = 'block';
-  } catch (err) {
-    showError(err.message);
-  } finally {
-    btn.disabled = false;
-    btn.textContent = '✨ Generar respuesta';
+    const data=await res.json();
+    if(!res.ok)throw new Error(data?.error?.message||`Error ${res.status}`);
+    const text=data.candidates?.[0]?.content?.parts?.[0]?.text?.trim();
+    if(!text)throw new Error('Sin respuesta.');
+    currentResponse=text;
+    currentMessage=msg;
+    document.getElementById('responseText').textContent=text;
+    document.getElementById('responseBox').style.display='block';
+    document.getElementById('doneBtn').style.display='block';
+    document.getElementById('emptyState').style.display='none';
+  }catch(e){showError(e.message);}
+  finally{btn.disabled=false;btn.textContent='✨ Generar respuesta';}
+}
+
+function copyResponse(){
+  navigator.clipboard.writeText(currentResponse);
+  const btn=document.getElementById('copyBtn');
+  btn.textContent='¡Copiado! ✓';btn.classList.add('copied');
+  setTimeout(()=>{btn.textContent='Copiar';btn.classList.remove('copied');},2500);
+}
+
+// ══════════════════════════════════
+// DONE → FEEDBACK FLOW
+// ══════════════════════════════════
+function showFeedback(){
+  // Show preview of the response
+  const preview=currentResponse.length>120?currentResponse.slice(0,120)+'...':currentResponse;
+  document.getElementById('fbPreviewText').textContent=preview;
+  // Reset feedback form
+  currentRating=null;
+  document.querySelectorAll('.rating-btn').forEach(b=>b.classList.remove('selected'));
+  document.getElementById('fbTipo').value='';
+  document.getElementById('fbCambio').value='';
+  // Hide tab nav temporarily, show feedback
+  document.getElementById('tabNav').style.display='none';
+  document.getElementById('responseView').style.display='none';
+  document.getElementById('feedbackView').style.display='block';
+  document.getElementById('headerSub').textContent='Evalúa esta respuesta';
+}
+
+function selectRating(val,btn){
+  currentRating=val;
+  document.querySelectorAll('.rating-btn').forEach(b=>b.classList.remove('selected'));
+  btn.classList.add('selected');
+}
+
+function saveFeedback(){
+  const tipo=document.getElementById('fbTipo').value;
+  const cambio=document.getElementById('fbCambio').value.trim();
+  const entry={
+    ts:Date.now(),
+    date:new Date().toLocaleDateString('es-ES'),
+    time:new Date().toLocaleTimeString('es-ES',{hour:'2-digit',minute:'2-digit'}),
+    rating:currentRating||'sin_evaluar',
+    tipo:tipo||'Sin clasificar',
+    cambio:cambio||'',
+    msgPreview:currentMessage.slice(0,80),
+    responsePreview:currentResponse.slice(0,80)
+  };
+  const data=getFeedbackData();
+  data.push(entry);
+  localStorage.setItem('bp_feedback',JSON.stringify(data));
+  returnToResponse();
+}
+
+function skipFeedback(){
+  returnToResponse();
+}
+
+function returnToResponse(){
+  // Reset the response view for next message
+  document.getElementById('clientMsg').value='';
+  document.getElementById('responseBox').style.display='none';
+  document.getElementById('doneBtn').style.display='none';
+  document.getElementById('emptyState').style.display='block';
+  currentResponse='';
+  currentMessage='';
+  hideError();
+  // Show tabs again and go to response view
+  document.getElementById('tabNav').style.display='flex';
+  document.getElementById('feedbackView').style.display='none';
+  document.getElementById('responseView').style.display='block';
+  document.getElementById('tabResponse').classList.add('active');
+  document.getElementById('tabDashboard').classList.remove('active');
+  document.getElementById('headerSub').textContent='Pega el mensaje de tu clienta · Recibe la respuesta lista';
+  // Scroll to top
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// ══════════════════════════════════
+// DASHBOARD
+// ══════════════════════════════════
+function getFeedbackData(){
+  try{return JSON.parse(localStorage.getItem('bp_feedback')||'[]');}catch{return[];}
+}
+
+function renderDashboard(){
+  const data=getFeedbackData();
+  const total=data.length;
+  const si=data.filter(d=>d.rating==='si').length;
+  const casi=data.filter(d=>d.rating==='casi').length;
+  const no=data.filter(d=>d.rating==='no').length;
+
+  document.getElementById('statTotal').textContent=total;
+  document.getElementById('statSi').textContent=total?Math.round(si/total*100)+'%':'0%';
+  document.getElementById('statCasi').textContent=total?Math.round(casi/total*100)+'%':'0%';
+  document.getElementById('statNo').textContent=total?Math.round(no/total*100)+'%':'0%';
+
+  // Tipo chart
+  const tipos={};
+  data.forEach(d=>{tipos[d.tipo]=(tipos[d.tipo]||0)+1;});
+  const sortedTipos=Object.entries(tipos).sort((a,b)=>b[1]-a[1]);
+  const maxTipo=sortedTipos[0]?.[1]||1;
+  const tipoHTML=sortedTipos.length?sortedTipos.map(([t,c])=>`
+    <div class="bar-row">
+      <span class="bar-label">${t.length>14?t.slice(0,14)+'…':t}</span>
+      <div class="bar-track"><div class="bar-fill" style="width:${Math.round(c/maxTipo*100)}%"></div></div>
+      <span class="bar-count">${c}</span>
+    </div>`).join(''):'<div class="empty-dash" style="padding:16px;">Todavía no hay datos.</div>';
+  document.getElementById('tipoChart').innerHTML=tipoHTML;
+
+  // Entry list
+  const listEl=document.getElementById('entryList');
+  if(!data.length){
+    listEl.innerHTML='<div class="empty-dash">Todavía no hay evaluaciones.<br>Usa la herramienta y dale feedback a algunas respuestas.</div>';
+    return;
+  }
+  const ratingIcon={si:'✅ Sí',casi:'⚠️ Casi',no:'❌ No',sin_evaluar:'—'};
+  const ratingColor={si:'#2E7D32',casi:'#E65100',no:'#C62828',sin_evaluar:'#B8A090'};
+  const recent=[...data].reverse().slice(0,15);
+  listEl.innerHTML=recent.map(e=>`
+    <div class="entry-card">
+      <div class="entry-top">
+        <span class="entry-tipo">${e.tipo}</span>
+        <span class="entry-date">${e.date} ${e.time||''}</span>
+      </div>
+      <div class="entry-rating" style="color:${ratingColor[e.rating]};font-weight:700;">${ratingIcon[e.rating]||'—'}</div>
+      ${e.msgPreview?`<div class="entry-msg-preview">💬 "${e.msgPreview}${e.msgPreview.length>=80?'…':''}"</div>`:''}
+      ${e.cambio?`<div class="entry-cambio">Cambió: "${e.cambio}"</div>`:''}
+    </div>`).join('');
+}
+
+function exportCSV(){
+  const data=getFeedbackData();
+  if(!data.length){alert('No hay datos para exportar todavía.');return;}
+  const headers=['Fecha','Hora','¿Sonó como Paola?','Tipo de pregunta','Qué cambió','Mensaje (preview)','Respuesta (preview)'];
+  const rows=data.map(d=>[
+    d.date,d.time||'',
+    {si:'Sí',casi:'Casi',no:'No',sin_evaluar:'Sin evaluar'}[d.rating]||'',
+    d.tipo,d.cambio,
+    (d.msgPreview||'').replace(/"/g,"'"),
+    (d.responsePreview||'').replace(/"/g,"'")
+  ]);
+  const csv=[headers,...rows].map(r=>r.map(c=>`"${c}"`).join(',')).join('\n');
+  const blob=new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8;'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url;a.download='ByPaolas_Feedback_'+new Date().toISOString().slice(0,10)+'.csv';
+  a.click();URL.revokeObjectURL(url);
+}
+
+function clearData(){
+  if(confirm('¿Borrar todos los datos de evaluación? Esta acción no se puede deshacer.')){
+    localStorage.removeItem('bp_feedback');
+    renderDashboard();
   }
 }
 </script>
